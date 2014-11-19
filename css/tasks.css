@@ -1,0 +1,14 @@
+
+.pull-right{
+    margin-top: -37px!important;
+}
+.success{
+    color: #ffff00;
+}
+input[type='checkbox']{
+    margin: 12px;
+}
+rect {
+    stroke: #fff;
+    stroke-width: .1px;
+}

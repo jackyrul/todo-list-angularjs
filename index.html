@@ -1,0 +1,116 @@
+
+<html ng-app="eventsApp">
+<head lang="en">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/tasks.css">
+
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="angular/angular.min.js"></script>
+    <script src="angular/app.js"></script>
+
+    <script src="angular/controllers/controller.js"></script>
+    <script src="angular/directives/directive.js"></script>
+
+    <script src="angular/filters/filter.js"></script>
+</head>
+<body>
+<div data-ng-controller="MainCtrl">
+<div class="navbar navbar-inverse " role="navigation" >
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"  href="#">Tasks</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="item in items" ng-class="{active : selectedIndex == $index}" ng-click="active($index)"><a href="#">{{item.name}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div ng-if="selectedIndex == 0" ng-controller="datesCtrl">
+    <div class="row">
+        <div class="col-lg-2 col-lg-offset-3">
+            <h1>Filtered</h1>
+            <ul>
+                <li ng-repeat="item in dates | checkCur ">
+                    {{ item }}
+                </li>
+                <li>date now: {{cur| date:'yyyy-MM-dd'}}</li>
+            </ul>
+            </div>
+        <div class="col-lg-4">
+            <h1>All</h1>
+            <ul>
+                <li ng-repeat="item in dates">
+                    {{ item.date | checkDate}}
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div ng-if="selectedIndex == 1" ng-controller="ToDoCtrl">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <h1>Shopping List</h1>
+            <h2>Add Item</h2>
+            <div class="input-group">
+                <input type="text" ng-model="name" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ng-click="add(name)">Add</button>
+                </span>
+            </div>
+        </div>
+    </div>
+<br>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <h2>Items</h2>
+                <div class="panel panel-default">
+                    <div class="list-group" ng-repeat="item in list.items">
+
+                        <a href="#" class="list-group-item " ng-class="{'list-group-item-success' : item.done}">
+                            <div class="btn-group pull-left">
+                                <input type="checkbox" ng-model="item.done"  ng-click="checked(item.done)" class="btn btn-default" />
+                            </div>
+
+                            <h4>{{item.name}}</h4>
+                            <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" ng-click="delete($index)">Delete</button>
+                            </div>
+                        </a>
+
+                    </div>
+                    <a href="#" ng-show="complitedCount > 0" class="list-group-item">
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-default" ng-click="clearAll()">Delete Cleared</button>
+                        </div>
+                    </a>
+                    <a href="#" ng-hide="list.items.length" class="list-group-item">
+                        <h4>List empty...</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+</div>
+    <d3></d3>
+</div>
+
+</body>
+</html>
